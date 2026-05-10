@@ -1,0 +1,23 @@
+[
+    {
+        "user_id": "100",
+        "name": "Bakery Owner",
+        "email": "owner@bakery.com",
+        "password": "owner123",
+        "role": "owner"
+    },
+    {
+        "user_id": "101",
+        "name": "Bakery Employee",
+        "email": "employee@bakery.com",
+        "password": "employee123",
+        "role": "employee"
+    },
+    {
+        "user_id": "8d2027f9-da5e-4c21-95c0-dd6174740447",
+        "name": "Avery Silicato",
+        "email": "asilicat@udel.edu",
+        "password": "avery123",
+        "role": "employee"
+    }
+]
