@@ -1,5 +1,4 @@
 import streamlit as st
-import json
 from pathlib import Path
 from datetime import datetime
 import uuid
@@ -731,8 +730,10 @@ def render_chatbot():
 
         try:
             ai_response = ai_assistant.generate_response(cleaned_question)
-        except Exception as e:
-            ai_response = f"Error: {str(e)}"
+        except Exception:
+            ai_response = ("The AI assistant is temporarily unavailable right now. "
+        "Please try again later."
+    )
 
         st.session_state["messages"].append({
             "role": "assistant",

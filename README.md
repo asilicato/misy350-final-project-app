@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Streamlit App Template
 
 Template for students to clone and run quickly.
@@ -54,3 +55,38 @@ source .venv/bin/activate
 pip install -r requirements.txt
 streamlit run app.py
 ```
+=======
+# misy35-final-project-app
+>>>>>>> 8521c646a98d182465fcf899630559fa84648222
+
+# Baking Wishes Inventory Manager
+
+## Features
+- User login and registration
+- Owner and employee roles
+- Inventory management
+- Restocking system
+- Sales tracking
+- Low stock flagging
+- AI inventory chatbot
+- Persistent JSON storage
+
+## Technologies Used
+- Python
+- Streamlit
+- OpenAI API
+- JSON
+- Object-Oriented Programming
+
+## File Structure
+- App.py → Main Streamlit application
+- data_manager.py → Handles JSON data storage
+- services.py → Business logic and inventory services
+- ai_assistant.py → OpenAI chatbot integration
+
+## How to Run
+1. Install requirements
+2. Add OpenAI API key to `.streamlit/secrets.toml`
+3. Run:
+```bash
+streamlit run App.py
