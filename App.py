@@ -4,6 +4,7 @@ from pathlib import Path
 from datetime import datetime
 import uuid
 import time
+from data_manager import DataManager
 
 st.set_page_config(
     page_title="Baking Wishes Inventory Manager",
@@ -47,31 +48,16 @@ DEFAULT_INVENTORY = [
 DEFAULT_SALES = []
 DEFAULT_FLAGS = []
 
-# data functions
-def load_json_file(path, default_data):
-    try:
-        if path.exists():
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-        else:
-            with open(path, "w", encoding="utf-8") as f:
-                json.dump(default_data, f, indent=4)
-            return default_data
-    except:
-        return default_data
+users_manager = DataManager(USERS_FILE, DEFAULT_USERS)
+inventory_manager = DataManager(INVENTORY_FILE, DEFAULT_INVENTORY)
+sales_manager = DataManager(SALES_FILE, DEFAULT_SALES)
+flags_manager = DataManager(FLAGS_FILE, DEFAULT_FLAGS)
 
-def save_json_file(path, data):
-    try:
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4)
-        return True
-    except:
-        return False
+users = users_manager.load_data()
+inventory = inventory_manager.load_data()
+sales = sales_manager.load_data()
+flags = flags_manager.load_data()
 
-users = load_json_file(USERS_FILE, DEFAULT_USERS)
-inventory = load_json_file(INVENTORY_FILE, DEFAULT_INVENTORY)
-sales = load_json_file(SALES_FILE, DEFAULT_SALES)
-flags = load_json_file(FLAGS_FILE, DEFAULT_FLAGS)
 
 # Session state 
 def initialize_session_state():
@@ -221,18 +207,17 @@ def flags_table_data():
         })
     return rows
 
-#wrapping 
 def save_users_data():
-    return save_json_file(USERS_FILE, users)
+    return users_manager.save_data(users)
 
 def save_inventory_data():
-    return save_json_file(INVENTORY_FILE, inventory)
+    return inventory_manager.save_data(inventory)
 
 def save_sales_data():
-    return save_json_file(SALES_FILE, sales)
+    return sales_manager.save_data(sales)
 
 def save_flags_data():
-    return save_json_file(FLAGS_FILE, flags)
+    return flags_manager.save_data(flags)
 
 #helpers
 def render_inventory_table():
@@ -317,6 +302,13 @@ render_sidebar()
 def render_login_page():
     show_page_header("Bakery Inventory Login", "Log in to access your bakery dashboard.")
 
+    with st.container(border=True):
+        st.subheader("Test Accounts")
+        st.write("**Owner Account**")
+        st.code("Email: owner@bakery.com\nPassword: owner123")
+        st.write("**Employee Account**")
+        st.code("Email: employee@bakery.com\nPassword: employee123")
+    
     left, center, right = st.columns([1, 2, 1])
 
     with center:

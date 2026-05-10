@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "sale_id": "S001",
+        "item_id": 1,
+        "employee_id": "101",
+        "quantity": 5,
+        "total": 12.5,
+        "sale_date": "2026-05-01"
+    },
+    {
+        "sale_id": "S002",
+        "item_id": 4,
+        "employee_id": "101",
+        "quantity": 10,
+        "total": 27.5,
+        "sale_date": "2026-05-03"
+    }
+]
