@@ -1,5 +1,7 @@
 from openai import OpenAI
 import streamlit as st
+import os
+from dotenv import load_dotenv
 
 
 class AIChatAssistant:
@@ -7,8 +9,15 @@ class AIChatAssistant:
         self.inventory = inventory
         self.sales = sales
         self.flags = flags
-        self.client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
+        load_dotenv()
+
+        api_key = os.getenv("OPENAI_API_KEY")
+
+        if not api_key:
+            api_key = st.secrets.get("OPENAI_API_KEY", None)
+
+        self.client = OpenAI(api_key=api_key)
     def build_context(self):
         return f"""
 Inventory Data:
