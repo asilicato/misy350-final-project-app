@@ -300,11 +300,10 @@ def render_login_page():
     show_page_header("Bakery Inventory Login", "Log in to access your bakery dashboard.")
 
     with st.container(border=True):
-        st.subheader("Test Accounts")
-        st.write("**Owner Account**")
-        st.code("Email: owner@bakery.com\nPassword: owner123")
-        st.write("**Employee Account**")
-        st.code("Email: employee@bakery.com\nPassword: employee123")
+        st.subheader("Demo Information")
+        st.write(
+        "This application supports both owner and employee roles "
+        "with role-based inventory management features.")
     
     left, center, right = st.columns([1, 2, 1])
 
