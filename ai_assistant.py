@@ -40,6 +40,4 @@ Low Stock Flags:
                     "content": f"Data:\n{context}\n\nQuestion: {user_question}"
                 }
             ]
-        )
-
-        return response.choices[0].message.content
+  

@@ -731,11 +731,8 @@ def render_chatbot():
 
         try:
             ai_response = ai_assistant.generate_response(cleaned_question)
-        except Exception:
-            ai_response = (
-                "The AI assistant could not connect right now. "
-                "Please make sure the OpenAI API key is added in Streamlit secrets."
-            )
+        except Exception as e:
+            ai_response = f"Error: {str(e)}"
 
         st.session_state["messages"].append({
             "role": "assistant",
