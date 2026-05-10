@@ -6,6 +6,7 @@ import uuid
 import time
 from data_manager import DataManager
 from services import InventoryService
+from ai_assistant import AIChatAssistant
 
 st.set_page_config(
     page_title="Baking Wishes Inventory Manager",
@@ -61,6 +62,7 @@ sales = sales_manager.load_data()
 flags = flags_manager.load_data()
 
 inventory_service = InventoryService(inventory)
+ai_assistant = AIChatAssistant(inventory, sales, flags)
 
 
 # Session state 
@@ -695,12 +697,12 @@ def render_flag_low_stock():
 
 def render_chatbot():
     require_role(["employee"])
-    show_page_header("Bakery Inventory Chatbot", "Ask simple questions about inventory, sales, and alerts.")
+    show_page_header("Bakery Inventory AI Assistant", "Ask questions about inventory, sales, and low-stock alerts.")
 
     top_left, top_right = st.columns([3, 1])
 
     with top_left:
-        st.caption("Try asking: What items are low on stock?")
+        st.caption("Try asking: What items should we restock first?")
 
     with top_right:
         if st.button("Clear Messages", key="chat_clear_messages_btn", use_container_width=True):
@@ -727,35 +729,13 @@ def render_chatbot():
             "content": cleaned_question
         })
 
-        question = cleaned_question.lower()
-
-        if "low stock" in question:
-            low_items = [item["name"] for item in inventory if item["stock"] < 5]
-            if len(low_items) > 0:
-                ai_response = "These items are low on stock: " + ", ".join(low_items)
-            else:
-                ai_response = "No bakery items are currently low on stock."
-
-        elif "how many items" in question or "how many products" in question:
-            ai_response = f"There are currently {len(inventory)} bakery items in the inventory."
-
-        elif "how many sales" in question:
-            ai_response = f"There are currently {len(sales)} sales records in the system."
-
-        elif "how many flags" in question or "alerts" in question:
-            ai_response = f"There are currently {len(flags)} low stock alerts."
-
-        elif "inventory value" in question:
-            ai_response = f"The current inventory value is ${get_inventory_value():.2f}."
-
-        elif "help" in question:
+        try:
+            ai_response = ai_assistant.generate_response(cleaned_question)
+        except Exception:
             ai_response = (
-                "You can ask about low stock items, total inventory items, "
-                "sales records, low stock alerts, and inventory value."
+                "The AI assistant could not connect right now. "
+                "Please make sure the OpenAI API key is added in Streamlit secrets."
             )
-
-        else:
-            ai_response = "I can answer simple bakery inventory questions right now."
 
         st.session_state["messages"].append({
             "role": "assistant",
@@ -764,6 +744,7 @@ def render_chatbot():
 
         time.sleep(0.4)
         st.rerun()
+
 
 
 def render_current_page():
