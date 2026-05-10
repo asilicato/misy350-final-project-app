@@ -129,27 +129,19 @@ def show_empty_message(message):
     st.info(message)
 
 def get_next_item_id():
-    if len(inventory) == 0:
-        return 1
-    return max(item["item_id"] for item in inventory) + 1
+    return inventory_service.get_next_item_id()
 
 def get_item_by_name(item_name):
-    for item in inventory:
-        if item["name"] == item_name:
-            return item
-    return None
+    return inventory_service.get_item_by_name(item_name)
 
 def get_item_names():
-    return [item["name"] for item in inventory]
+    return inventory_service.get_item_names()
 
 def get_low_stock_items():
-    return [item for item in inventory if item["stock"] < 5]
+    return inventory_service.get_low_stock_items()
 
 def get_inventory_value():
-    total = 0
-    for item in inventory:
-        total += item["unit_price"] * item["stock"]
-    return total
+    return inventory_service.get_inventory_value()
 
 #inventory table
 def inventory_table_data():
