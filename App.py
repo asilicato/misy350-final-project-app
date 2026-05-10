@@ -12,6 +12,60 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+#color and theme 
+st.markdown("""
+<style>
+
+/* Main app background */
+.stApp {
+    background-color: #fff7fb;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #f8d7e6;
+}
+
+/* Main titles */
+h1 {
+    color: #b34b7d;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: #e78fb3;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+}
+
+.stButton > button:hover {
+    background-color: #d96a99;
+    color: white;
+}
+
+/* Metric cards */
+[data-testid="metric-container"] {
+    background-color: #ffeaf3;
+    border: 1px solid #f5bfd4;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+/* Containers */
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    border-radius: 12px;
+}
+
+/* Success boxes */
+div[data-baseweb="notification"] {
+    border-radius: 10px;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 # file paths 
 USERS_FILE = Path("users.json")
@@ -295,16 +349,31 @@ def render_sidebar():
 
 render_sidebar()
 
-#making the pages work 
+#ma render_login_page():
 def render_login_page():
     show_page_header("Bakery Inventory Login", "Log in to access your bakery dashboard.")
 
-    with st.container(border=True):
-        st.subheader("Demo Information")
-        st.write(
-        "This application supports both owner and employee roles "
-        "with role-based inventory management features.")
-    
+    left_img, right_content = st.columns([1, 2])
+
+    with left_img:
+        st.image("cupcake.webp", width=220)
+
+    with right_content:
+        with st.container(border=True):
+            st.subheader("Test Accounts")
+
+            st.write("**Owner Account**")
+            st.code(
+                "Email: owner@bakery.com\n"
+                "Password: owner123"
+            )
+
+            st.write("**Employee Account**")
+            st.code(
+                "Email: employee@bakery.com\n"
+                "Password: employee123"
+            )
+
     left, center, right = st.columns([1, 2, 1])
 
     with center:
@@ -341,6 +410,7 @@ def render_login_page():
                 go_to_page("owner_dashboard")
             else:
                 go_to_page("employee_dashboard")
+  
 
 def render_register_page():
     show_page_header("Register New Account", "Create a new bakery owner or employee account.")
