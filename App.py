@@ -5,6 +5,7 @@ from datetime import datetime
 import uuid
 import time
 from data_manager import DataManager
+from services import InventoryService
 
 st.set_page_config(
     page_title="Baking Wishes Inventory Manager",
@@ -17,6 +18,7 @@ USERS_FILE = Path("users.json")
 INVENTORY_FILE = Path("inventory.json")
 SALES_FILE = Path("sales.json")
 FLAGS_FILE = Path("flags.json")
+
 
 # Data 
 DEFAULT_USERS = [
@@ -57,6 +59,8 @@ users = users_manager.load_data()
 inventory = inventory_manager.load_data()
 sales = sales_manager.load_data()
 flags = flags_manager.load_data()
+
+inventory_service = InventoryService(inventory)
 
 
 # Session state 
