@@ -5,10 +5,13 @@
         "email": "owner@bakery.com",
         "password": "owner123",
         "role": "owner",
-        "login_count": 1,
-        "last_login": "2026-05-11 11:53 AM",
+        "created_at": "Default Account",
+        "login_count": 2,
+        "last_login": "2026-05-11 11:54 AM",
+        "locked": false,
         "activity_log": [
-            "Logged in at 2026-05-11 11:53 AM"
+            "Logged in at 2026-05-11 11:53 AM",
+            "Logged in at 2026-05-11 11:54 AM"
         ]
     },
     {
@@ -16,13 +19,23 @@
         "name": "Bakery Employee",
         "email": "employee@bakery.com",
         "password": "employee123",
-        "role": "employee"
+        "role": "employee",
+        "created_at": "Default Account",
+        "login_count": 0,
+        "last_login": "Never",
+        "locked": false,
+        "activity_log": []
     },
     {
-        "user_id": "8d2027f9-da5e-4c21-95c0-dd6174740447",
-        "name": "Avery Silicato",
-        "email": "asilicat@udel.edu",
+        "user_id": "102",
+        "name": "Avery",
+        "email": "asilicato@udel.edu",
         "password": "avery123",
-        "role": "employee"
+        "role": "employee",
+        "created_at": "2026-05-11 11:58 AM",
+        "login_count": 0,
+        "last_login": "Never",
+        "locked": false,
+        "activity_log": []
     }
 ]

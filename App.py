@@ -336,6 +336,9 @@ def render_sidebar():
                 if st.button("Low Stock Alerts", key="sidebar_low_stock_alerts_btn", use_container_width=True):
                     go_to_page("low_stock_alerts")
 
+                if st.button("Employee Tracking", key="sidebar_employee_tracking_btn", use_container_width=True):
+                    go_to_page("owner_dashboard")
+
             elif st.session_state["role"] == "employee":
                 if st.button("Employee Dashboard", key="sidebar_employee_dashboard_btn", use_container_width=True):
                     go_to_page("employee_dashboard")
@@ -538,16 +541,15 @@ def render_owner_dashboard():
             if user.get("locked", False):
                 if st.button(f"Unlock {user['name']}", key=f"unlock_{user['user_id']}"):
                     user["locked"] = False
-                save_users_data()
-                st.success("Employee account unlocked.")
-                st.rerun()
+                    save_users_data()
+                    st.success("Employee account unlocked.")
+                    st.rerun()
             else:
-             if st.button(f"Lock {user['name']}", key=f"lock_{user['user_id']}"):
-                user["locked"] = True
-                save_users_data()
-                st.success("Employee account locked.")
-                st.rerun()
-
+                if st.button(f"Lock {user['name']}", key=f"lock_{user['user_id']}"):
+                    user["locked"] = True
+                    save_users_data()
+                    st.success("Employee account locked.")
+                    st.rerun()
 
 def render_manage_inventory():
     require_role(["owner"])
