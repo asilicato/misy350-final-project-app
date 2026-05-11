@@ -14,5 +14,29 @@
         "quantity": 10,
         "total": 27.5,
         "sale_date": "2026-05-03"
+    },
+    {
+        "sale_id": "5afa7893-243d-4c44-9194-c9e0df8684c6",
+        "item_id": 1,
+        "employee_id": "24daeb5b-4321-4153-89af-b1381e0af1de",
+        "quantity": 3,
+        "total": 7.5,
+        "sale_date": "2026-05-11"
+    },
+    {
+        "sale_id": "2b595520-d61f-42a1-a869-d026ea9d6fa8",
+        "item_id": 4,
+        "employee_id": "102",
+        "quantity": 10,
+        "total": 27.5,
+        "sale_date": "2026-05-11"
+    },
+    {
+        "sale_id": "43ebf457-1a50-4fa1-b171-3eecce71a804",
+        "item_id": 6,
+        "employee_id": "102",
+        "quantity": 5,
+        "total": 17.5,
+        "sale_date": "2026-05-11"
     }
 ]

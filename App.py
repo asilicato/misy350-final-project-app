@@ -337,7 +337,7 @@ def render_sidebar():
                     go_to_page("low_stock_alerts")
 
                 if st.button("Employee Tracking", key="sidebar_employee_tracking_btn", use_container_width=True):
-                    go_to_page("owner_dashboard")
+                    go_to_page("employee_tracking")
 
             elif st.session_state["role"] == "employee":
                 if st.button("Employee Dashboard", key="sidebar_employee_dashboard_btn", use_container_width=True):
@@ -512,23 +512,34 @@ def render_owner_dashboard():
     else:
         st.dataframe(low_stock_table_data(), use_container_width=True, hide_index=True)
 
+def render_employee_tracking():
+    require_role(["owner"])
+    show_page_header("Employee Tracking", "Track employee account activity and lock or unlock employee access.")
+
     st.markdown("### Employee Login Tracking")
 
     employee_data = []
 
     for user in users:
         if user.get("role") == "employee":
+            sales_count = 0
+            for sale in sales:
+                if sale["employee_id"] == user["user_id"]:
+                    sales_count += 1
+
             employee_data.append({
-            "Employee Name": user.get("name", "N/A"),
-            "Email": user.get("email", "N/A"),
-            "Created At": user.get("created_at", "N/A"),
-            "Login Count": user.get("login_count", 0),
-            "Last Login": user.get("last_login", "Never"),
-            "Locked": user.get("locked", False)
-        })
+                "Employee Name": user.get("name", "N/A"),
+                "Email": user.get("email", "N/A"),
+                "Created At": user.get("created_at", "N/A"),
+                "Login Count": user.get("login_count", 0),
+                 "Sales Logged": sales_count,
+                "Last Login": user.get("last_login", "Never"),
+                "Locked": user.get("locked", False)
+})
+            
 
     if len(employee_data) == 0:
-            st.info("No employee accounts found.")
+        st.info("No employee accounts found.")
     else:
         st.dataframe(employee_data, use_container_width=True, hide_index=True)
 
@@ -550,7 +561,7 @@ def render_owner_dashboard():
                     save_users_data()
                     st.success("Employee account locked.")
                     st.rerun()
-
+  
 def render_manage_inventory():
     require_role(["owner"])
     show_page_header("Manage Bakery Inventory", "Add, update, or delete bakery items.")
@@ -893,6 +904,8 @@ def render_current_page():
         render_register_page()
     elif page == "owner_dashboard":
         render_owner_dashboard()
+    elif page == "employee_tracking":
+        render_employee_tracking()
     elif page == "manage_inventory":
         render_manage_inventory()
     elif page == "restock_inventory":

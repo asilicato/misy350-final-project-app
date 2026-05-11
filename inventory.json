@@ -1,8 +1,38 @@
 [
-    {"item_id":1, "name": "Donut", "unit_price": 2.50, "stock":60},
-    {"item_id":2, "name": "Croissant", "unit_price": 3.00, "stock":30},
-    {"item_id":3, "name": "Muffin", "unit_price": 4.50, "stock":50},
-    {"item_id":4, "name": "Cookie", "unit_price": 2.75, "stock":100},
-    {"item_id":5, "name": "Pie", "unit_price": 10.00, "stock":20},
-    {"item_id":6, "name": "Brownie", "unit_price": 3.50, "stock":50}
+    {
+        "item_id": 1,
+        "name": "Donut",
+        "unit_price": 2.5,
+        "stock": 57
+    },
+    {
+        "item_id": 2,
+        "name": "Croissant",
+        "unit_price": 3.0,
+        "stock": 30
+    },
+    {
+        "item_id": 3,
+        "name": "Muffin",
+        "unit_price": 4.5,
+        "stock": 50
+    },
+    {
+        "item_id": 4,
+        "name": "Cookie",
+        "unit_price": 2.75,
+        "stock": 90
+    },
+    {
+        "item_id": 5,
+        "name": "Pie",
+        "unit_price": 10.0,
+        "stock": 20
+    },
+    {
+        "item_id": 6,
+        "name": "Brownie",
+        "unit_price": 3.5,
+        "stock": 45
+    }
 ]
