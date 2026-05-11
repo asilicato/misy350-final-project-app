@@ -4,7 +4,12 @@
         "name": "Bakery Owner",
         "email": "owner@bakery.com",
         "password": "owner123",
-        "role": "owner"
+        "role": "owner",
+        "login_count": 1,
+        "last_login": "2026-05-11 11:53 AM",
+        "activity_log": [
+            "Logged in at 2026-05-11 11:53 AM"
+        ]
     },
     {
         "user_id": "101",

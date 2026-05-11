@@ -81,14 +81,24 @@ DEFAULT_USERS = [
         "name": "Bakery Owner",
         "email": "owner@bakery.com",
         "password": "owner123",
-        "role": "owner"
+        "role": "owner",
+        "created_at": "Default Account",
+        "login_count": 0,
+        "last_login": "Never",
+        "locked": False,
+        "activity_log": []
     },
     {
         "user_id": "101",
         "name": "Bakery Employee",
         "email": "employee@bakery.com",
         "password": "employee123",
-        "role": "employee"
+        "role": "employee",
+        "created_at": "Default Account",
+        "login_count": 0,
+        "last_login": "Never",
+        "locked": False,
+        "activity_log": []
     }
 ]
 
@@ -398,6 +408,20 @@ def render_login_page():
                 st.error("Invalid email or password.")
                 return
 
+            if found_user.get("locked", False):
+                st.error("This account is locked. Please contact the owner.")
+                return
+
+            found_user["login_count"] = found_user.get("login_count", 0) + 1
+            found_user["last_login"] = datetime.now().strftime("%Y-%m-%d %I:%M %p")
+
+            if "activity_log" not in found_user:
+                found_user["activity_log"] = []
+
+            found_user["activity_log"].append(f"Logged in at {found_user['last_login']}")
+
+            save_users_data()
+
             st.session_state["logged_in"] = True
             st.session_state["user_id"] = found_user["user_id"]
             st.session_state["name"] = found_user["name"]
@@ -445,12 +469,16 @@ def render_register_page():
                     st.error("That email is already registered.")
                     return
 
-            users.append({
-                "user_id": str(uuid.uuid4()),
+            users.append({ "user_id": str(uuid.uuid4()),
                 "name": name,
                 "email": email,
                 "password": password,
-                "role": role
+                "role": role,
+                "created_at": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
+                "login_count": 0,
+                "last_login": "Never",
+                "locked": False,
+                 "activity_log": []
             })
 
             if save_users_data():
@@ -480,6 +508,46 @@ def render_owner_dashboard():
         st.success("No items are currently low on stock.")
     else:
         st.dataframe(low_stock_table_data(), use_container_width=True, hide_index=True)
+
+    st.markdown("### Employee Login Tracking")
+
+    employee_data = []
+
+    for user in users:
+        if user.get("role") == "employee":
+            employee_data.append({
+            "Employee Name": user.get("name", "N/A"),
+            "Email": user.get("email", "N/A"),
+            "Created At": user.get("created_at", "N/A"),
+            "Login Count": user.get("login_count", 0),
+            "Last Login": user.get("last_login", "Never"),
+            "Locked": user.get("locked", False)
+        })
+
+    if len(employee_data) == 0:
+            st.info("No employee accounts found.")
+    else:
+        st.dataframe(employee_data, use_container_width=True, hide_index=True)
+
+    st.markdown("### Lock or Unlock Employee Accounts")
+
+    for user in users:
+        if user.get("role") == "employee":
+            st.write(f"**{user.get('name')}** — {user.get('email')}")
+
+            if user.get("locked", False):
+                if st.button(f"Unlock {user['name']}", key=f"unlock_{user['user_id']}"):
+                    user["locked"] = False
+                save_users_data()
+                st.success("Employee account unlocked.")
+                st.rerun()
+            else:
+             if st.button(f"Lock {user['name']}", key=f"lock_{user['user_id']}"):
+                user["locked"] = True
+                save_users_data()
+                st.success("Employee account locked.")
+                st.rerun()
+
 
 def render_manage_inventory():
     require_role(["owner"])
